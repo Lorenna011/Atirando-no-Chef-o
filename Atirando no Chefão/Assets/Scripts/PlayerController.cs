@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.linearVelocity = movement.normalized * speed;
+        Vector2 newPosition = rb.position + movement.normalized * speed * Time.fixedDeltaTime;
+
+        newPosition.x = Mathf.Clamp(newPosition.x, -7.5f, 7.5f);
+        newPosition.y = Mathf.Clamp(newPosition.y, -4f, 4f);
+
+        rb.MovePosition(newPosition);
     }
 }
