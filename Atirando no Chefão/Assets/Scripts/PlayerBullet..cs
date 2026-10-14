@@ -18,23 +18,25 @@ public class PlayerBullet : MonoBehaviour
         timer = 0f;
     }
 
-    void Update()
+    private void Update()
     {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        transform.position += transform.right * speed * Time.deltaTime;
 
         timer += Time.deltaTime;
 
         if (timer >= lifetime)
         {
-            pool.Release(this);
+            if (pool != null)
+                pool.Release(this);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Boss"))
         {
-            pool.Release(this);
+            if (pool != null)
+                pool.Release(this);
         }
     }
 }
